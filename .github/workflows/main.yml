@@ -25,6 +25,11 @@ jobs:
           git config --global user.name ${GITHUB_ACTOR}
           git config --global user.email ${GITHUB_ACTOR}@nomail.com
           git add src/*
-          ls -l
+          ls -l src
           git status
           git commit -m "AIRAC update" -a
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
