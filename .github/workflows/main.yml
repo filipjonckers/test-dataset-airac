@@ -15,4 +15,5 @@ jobs:
       - name: display repo dir location
         run: echo repo=$GITHUB_REPOSITORY	 available in $GITHUB_WORKSPACE event=$GITHUB_EVENT_NAME
 
-
+      - name: Run a one-line script
+        run: ls -l $GITHUB_WORKSPACE
