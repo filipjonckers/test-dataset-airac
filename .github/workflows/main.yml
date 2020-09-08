@@ -16,11 +16,12 @@ jobs:
         run: |
           echo repo=$GITHUB_REPOSITORY	 available in $GITHUB_WORKSPACE event=$GITHUB_EVENT_NAME
           ls -l .
-          git log
+          git log --graph --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
       - name: download public files
         run: |
-          wget https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
-          wget https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
-          echo wget https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          wget -P src https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
+          echo wget -P src https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
+          echo wget -P src https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          git add src/*
           ls -l
           git status
