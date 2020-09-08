@@ -12,10 +12,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v2
 
-      - name: display repo dir location
+      - name: initialise
         run: |
           echo repo=$GITHUB_REPOSITORY	 available in $GITHUB_WORKSPACE event=$GITHUB_EVENT_NAME
           ls -l $GITHUB_WORKSPACE
           touch test.txt
           ls -l .
+          git status
+      - name: download public files
+        run: |
+          wget https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
+          wget https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
+          echo wget https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          ls -l
           git status
