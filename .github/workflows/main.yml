@@ -1,6 +1,8 @@
 name: AIRAC-update
 
 on:
+  schedule:
+    - cron: "0 1 * * *"
   # manual trigger only
   workflow_dispatch:
 
@@ -20,13 +22,16 @@ jobs:
       - name: download public files
         run: |
           wget -P src https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
-          echo wget -P src https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
-          echo wget -P src https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          wget -P src https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
+          wget -P src https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          ls -l src
+          
+      - name: add files to repository
+        run: |
+          git status
           git config --global user.name ${GITHUB_ACTOR}
           git config --global user.email ${GITHUB_ACTOR}@nomail.com
           git add src/*
-          ls -l src
-          git status
           git commit -m "AIRAC update" -a
 
       - name: Push changes
