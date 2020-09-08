@@ -12,8 +12,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v2
 
+      - name: display repo dir location
+        run: echo $GITHUB_WORKSPACE
+
       - name: Run a one-line script
         run: ls -l $GITHUB_WORKSPACE
+        shell: bash
+        
       - name: Create a file
         working-directory: $GITHUB_WORKSPACE
         run: |
