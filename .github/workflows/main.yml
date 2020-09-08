@@ -15,18 +15,4 @@ jobs:
       - name: display repo dir location
         run: echo $GITHUB_WORKSPACE
 
-      - name: Run a one-line script
-        run: ls -l $GITHUB_WORKSPACE
-        shell: bash
-        
-      - name: Create a file
-        working-directory: $GITHUB_WORKSPACE
-        run: |
-          pwd
-          touch test.txt
-          ls -l
 
-      - name: Run a multi-line script
-        run: |
-          git status
-          git log
