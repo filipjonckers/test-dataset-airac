@@ -22,6 +22,9 @@ jobs:
           wget -P src https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
           echo wget -P src https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
           echo wget -P src https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          git config --global user.name ${GITHUB_ACTOR}
+          git config --global user.email ${GITHUB_ACTOR}@nomail.com
           git add src/*
           ls -l
           git status
+          git commit -m "AIRAC update" -a
