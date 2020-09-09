@@ -1,4 +1,5 @@
-![AIRAC update](https://github.com/actions/test-dataset-airac/workflows/AIRAC-update/badge.svg)
+![AIRAC-update](https://github.com/filipjonckers/test-dataset-airac/workflows/AIRAC-update/badge.svg?branch=master&event=workflow_dispatch)
+
 
 
 # test-dataset-airac
