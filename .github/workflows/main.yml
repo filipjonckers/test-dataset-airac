@@ -21,9 +21,10 @@ jobs:
           git log --graph --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
       - name: download public files
         run: |
-          wget -P src https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
-          wget -P src https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
-          wget -P src https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          wget --non-verbose -P tmp https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
+          wget --non-verbose -P tmp https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
+          wget --non-verbose -P tmp https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          rsync -av tmp/*.csv src/
           ls -l src
           
       - name: add files to repository
