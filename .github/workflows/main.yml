@@ -1,8 +1,9 @@
 name: AIRAC-update
 
 on:
+  # runs every Thursday night to cover 28 day AIRAC update
   schedule:
-    - cron: "0 1 * * *"
+    - cron: "0 1 * * THU"
   # manual trigger only
   workflow_dispatch:
 
