@@ -20,7 +20,14 @@ jobs:
           echo repo=$GITHUB_REPOSITORY	 available in $GITHUB_WORKSPACE event=$GITHUB_EVENT_NAME
           ls -l .
           git log --graph --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
+      - name: calculate AIRAC date
+        run: echo "AIRACDATE=$(expr $(date +\%s) / 86400 % 28 )" >> $GITHUB_ENV
+        shell: bash
+      - name: test if AIRAC date
+        if: env.AIRACDATE != 0
+        run: echo "Today is not an AIRAC date"
       - name: download public files
+        if: env.AIRACDATE == 0
         run: |
           wget --no-verbose -P tmp https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
           wget --no-verbose -P tmp https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
@@ -33,6 +40,7 @@ jobs:
           ls -l src
           
       - name: add files to repository
+        if: env.AIRACDATE == 0
         run: |
           git status
           git config --global user.name ${GITHUB_ACTOR}
@@ -41,6 +49,7 @@ jobs:
           git commit -m "AIRAC update" -a
 
       - name: Push changes
+        if: env.AIRACDATE == 0
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
