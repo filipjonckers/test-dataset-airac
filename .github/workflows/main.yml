@@ -32,7 +32,9 @@ jobs:
         run: |
           wget --no-verbose -P tmp https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
           wget --no-verbose -P tmp https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
+
           wget --no-verbose -P tmp https://opensky-network.org/datasets/metadata/aircraftDatabase.csv
+          cat tmp/aircraftDatabase.csv | awk -F'"?,"?' 'BEGIN {OFS = "|"} NR>1 && $3~/[^[:space:]]/ && $1~/^\"44/ {sub(/^\"/,"",$1) ; print $1,$2,$6,$9}' | sort -u > tmp/aircraft.csv
           
           wget --no-verbose -O - https://data.flightairmap.com/data/routes.tsv.gz | gunzip -c > tmp/routes.tsv
           tail -n +2 tmp/routes.tsv | awk 'BEGIN {OFS = ","} $1~/^[A-Z]{3}[0-9]/ && $3~/^[A-Z]{4}$/ && $5~/^[A-Z]{4}$/ {print $1,$3,$5}' | sort > tmp/routes.csv
