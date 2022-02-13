@@ -25,7 +25,7 @@ jobs:
         run: echo "AIRACDATE=$(( ( $(date +\%s) - 1611788400 ) / 86400 % 28 ))" >> $GITHUB_ENV
         shell: bash
       - name: test if AIRAC date
-        if: env.AIRACDATE != 0
+        if: env.AIRACDATE != 0 || github.event_name == 'workflow_dispatch'
         run: echo "Today is not an AIRAC date"
       - name: download public files
         if: env.AIRACDATE == 0
