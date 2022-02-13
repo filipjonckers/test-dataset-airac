@@ -39,6 +39,10 @@ jobs:
           wget --no-verbose -O - https://data.flightairmap.com/data/routes.tsv.gz | gunzip -c > tmp/routes.tsv
           tail -n +2 tmp/routes.tsv | awk 'BEGIN {OFS = ","} $1~/^[A-Z]{3}[0-9]/ && $3~/^[A-Z]{4}$/ && $5~/^[A-Z]{4}$/ {print $1,$3,$5}' | sort > tmp/routes.csv
 
+          wget --no-verbose -P tmp http://downloads.adsbexchange.com/downloads/basic-ac-db.json.gz
+          gunzip -d tmp/basic-ac-db.json.gz
+          awk 'BEGIN {FS="[:,]" ; OFS = ","}  { gsub(/["{}]/,"") ; gsub(/null/,"") ; print $2,$4,$6 }' tmp/basic-ac-db.json | sort -u > tmp/aircraft.csv
+
           rsync -av tmp/*.csv src/
           ls -l src
           
