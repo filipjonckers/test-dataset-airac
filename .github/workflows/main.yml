@@ -25,10 +25,10 @@ jobs:
         run: echo "AIRACDATE=$(( ( $(date +\%s) - 1611788400 ) / 86400 % 28 ))" >> $GITHUB_ENV
         shell: bash
       - name: test if AIRAC date
-        if: env.AIRACDATE != 0 || github.event_name == 'workflow_dispatch'
+        if: env.AIRACDATE != 0
         run: echo "Today is not an AIRAC date"
       - name: download public files
-        if: env.AIRACDATE == 0
+        if: env.AIRACDATE == 0 || github.event_name == 'workflow_dispatch'
         run: |
           wget --no-verbose -P tmp https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
           wget --no-verbose -P tmp https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv
@@ -47,7 +47,7 @@ jobs:
           ls -l src
           
       - name: add files to repository
-        if: env.AIRACDATE == 0
+        if: env.AIRACDATE == 0 || github.event_name == 'workflow_dispatch'
         run: |
           git status
           git config --global user.name ${GITHUB_ACTOR}
@@ -56,7 +56,7 @@ jobs:
           git commit -m "AIRAC update" -a
 
       - name: Push changes
-        if: env.AIRACDATE == 0
+        if: env.AIRACDATE == 0 || github.event_name == 'workflow_dispatch'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
